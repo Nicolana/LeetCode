@@ -3,30 +3,20 @@ package main
 import "fmt"
 
 func removeDuplicates(nums []int) int {
-	length := len(nums)
-	count := 0
-	prev := nums[0]
-	j := 0
-	for i := 0; i < length; i++ {
-		num := nums[i]
-		fmt.Println("Num =", num)
-		if prev == num {
-			count++
-			if count <= 2 {
-				// 两个值相同，计数器增加
-				// 把这个值挪到j的位置，并且+1
-				nums[j] = num
-				j++
-			}
-		} else {
-			count = 1
-			prev = num
-			nums[j] = num
-			j++
-		}
+	n := len(nums)
+	if n <= 2 {
+		return n
 	}
 
-	return j
+	slow, fast := 2, 2
+	for fast < n {
+		if nums[slow-2] != nums[fast] {
+			nums[slow] = nums[fast]
+			slow++
+		}
+		fast++
+	}
+	return slow
 }
 
 func main() {
