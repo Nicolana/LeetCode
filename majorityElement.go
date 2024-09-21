@@ -3,20 +3,21 @@ package main
 import "fmt"
 
 func majorityElement(nums []int) int {
-	n := len(nums)
-	num := n / 2
-	m := make(map[int]int) // 用于统计数字出现的次数
-	for i := 0; i < n; i++ {
-		m[nums[i]]++
-	}
+	candidate := nums[0]
+	count := 1
 
-	// 遍历map，找到出现次数最多的数字
-	for key, value := range m {
-		if value > num {
-			return key
+	for i := 1; i < len(nums); i++ {
+		value := nums[i]
+		if count == 0 {
+			candidate = value
+			count++
+		} else if candidate == value {
+			count++
+		} else {
+			count--
 		}
 	}
-	return -1
+	return candidate
 }
 
 func main() {
